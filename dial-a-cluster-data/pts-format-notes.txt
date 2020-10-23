@@ -1,0 +1,62 @@
+The PTS format consists of a .zip file with two folders CSV and META.  The 
+example file is called weather-pts.zip in the repository.
+
+In the CSV folder are .csv files.  The files can be named anything, but it's 
+helpful to name them according to a data point and a time series in the 
+data point.  For the weather data, they are called city#_data#.csv, where 
+city# is the number of the city and data# is the number of the time 
+series associated with that city.  For example, city1 might be San 
+Francisco, and data2 might be mean temperatures, so city1_data2.csv 
+would contain a time series for mean temperatures for San Francisco.
+
+The .csv files each have four columns, with the header SampleNum,Raw,X,Y.  
+The only important columns are X and Y.  X gives the time points for a 
+time series and Y gives the values for the time series.  For the weather 
+data, SampleNum goes from 1 ... number of time points and for Raw it is Y.
+
+For each .csv file in the CSV folder, there is an associated .ini file in 
+the META folder.  The two files should have the same name (except for the 
+extension).  The .ini files contain meta data which describes the data 
+point itself (i.e. the city for the weather data), and the time series in 
+the .csv file.  The .ini files can have comment lines starting with ";".  
+Each .ini file has three sections, denoted by lines with the keywords "[test]", 
+"[operation]", and "[waveform]". 
+
+The "[test]" section contains information about the data point (city).  
+This data is used to fill the metadata table in the dial-a-cluster web app.  
+Each line in the test section looks like
+
+City="New York"
+
+Before the equals sign is the table header, and after the equals sign is 
+the description (must be in quotes).  This section is the same for each 
+.ini file which describes the same data point (city for weather data).
+
+The "[operation]" section has to have one line
+
+test_op_inst_id=#
+
+The test_op_inst_id is a keyword and the # is replaced by the number of 
+the data point (must be a unique id).  For the weather data, the id used 
+is the same number as the city# in the file name.
+
+The "[waveform]" section has metadata describing the actual time series 
+data contained in the associated .csv file.  The fields here have to include:
+
+WF_DIG_ID="1"
+WF_DIG_LABEL="Max Temperature"
+WF_X_UNITS="Day"
+WF_Y_UNITS="F"
+
+The WF_DIG_ID field is an identifier which has to match up for each time 
+series.  For the weather data, the value used is the same number as the 
+data# in the file name.  The WF_DIG_LABEL field gives the title of the 
+time series, so here it is "Max Temperature".  This label is used in the
+plots in the dial-a-cluster web app.  The WF_X_UNITS field are the time
+units and the WF_Y_UNITS are the value for the time series.
+
+One final note: the .zip file must contain the two folders at the root 
+level, and each .csv file must have an associated .ini file.  There can't 
+be extra files in the archive.  If there are, the web app will 
+check and refuse to load the .zip file.  This is important when zipping
+the directory on a Mac, because of the .DS_Store files.
