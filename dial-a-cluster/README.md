@@ -1,8 +1,6 @@
 # dial-a-cluster-data
 Data for the [Dial-A-Cluster](https://github.com/sandialabs/dial-a-cluster) model plugin for [Slycat](https://github.com/sandialabs/slycat).
 
-Note: this data can be used for demonstrations, but is not publicly distributable.
-
 ## weather-csv ##
 Internal format for dac-gen zip file.
 
