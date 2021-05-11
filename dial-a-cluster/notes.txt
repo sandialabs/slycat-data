@@ -17,9 +17,10 @@ the directory on a Mac, because of the .DS_Store files.
 
 Also important, the directory has to be zipped from within the folder containing
 the files described below, i.e. when the file is unzipped it must have only
-the directories var/ dist/ time/ and the .dac file.
+the directories var/, dist/, time/, the .dac file, and an optional
+landmarks.csv file.
 
-The central index file (selected using the wizard) is:
+The central index file is:
 
 datapoints.dac -- information on the data points, must include a header
 that describes each column.  Following the header are rows 
@@ -27,6 +28,12 @@ for each datapoint (so there should be same number of rows as the number
 of rows in each of the .var files).  For the push script (dac-create-model.py,
 which only works without single sign-on) the name has to be "datapoints.dac".
 For the wizard it only has to have the ".dac" extension.
+
+Also in the main directory is:
+
+landmarks.csv -- a .csv formatted file with a just a single row, where the
+row containds the indices (1-based) for the chosen landmarks in the distance
+matrices.
 
 In the "time" directory:
 
@@ -57,8 +64,10 @@ representation, bar is a histogram type plot, and scatter is a point plot.
 In the "dist" directory is derived data:
 
 variable_1.dist -- pairwise distance matrix between each 
-time series in variable_1.var
+time series in variable_1.var.  If landmarks are being used, these are
+not square matrices, but rather N by k, where N is the number of points
+and k is the number of landmarks.
 
 ...
 
-variable_n.dist -- n time series
+variable_n.dist -- distance matrix for nth variable
