@@ -12,6 +12,9 @@ Format for loading categories in add new column wizard.
 ## weather-dac-gen.zip ##
 Generic zipped CSV format weather data.
 
+## weather-dac-gen-landmarks.zip ##
+Generic zipped CSV format weather data with landmarks.
+
 ## weather-pts.zip ##
 PTS format of same weather data.
 
