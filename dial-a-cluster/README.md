@@ -1,6 +1,8 @@
 # dial-a-cluster-data
 Data for the [Dial-A-Cluster](https://github.com/sandialabs/dial-a-cluster) model plugin for [Slycat](https://github.com/sandialabs/slycat).
 
+Note: this data can be used for demonstrations, but is not publicly distributable.
+
 ## weather-csv ##
 Internal format for dac-gen zip file.
 
@@ -9,9 +11,6 @@ Format for loading categories in add new column wizard.
 
 ## weather-dac-gen.zip ##
 Generic zipped CSV format weather data.
-
-## weather-dac-gen-landmarks.zip ##
-Generic zipped CSV format weather data with landmarks.
 
 ## weather-pts.zip ##
 PTS format of same weather data.
