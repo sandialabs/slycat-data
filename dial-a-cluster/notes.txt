@@ -1,0 +1,73 @@
+This directory contains example data for use with the dial-a-cluster
+application.  There is only one sample dataset, as follows:
+
+weather-dac-gen -- a multivariate time series dataset containing weather 
+statistics over the year 2014 for the top 100 most populated cities in the US,
+taken from the weather underground web site.  This folder contains the generic
+dial-a-cluster format described below.
+
+weather-pts -- the same data set in the "pts" format.  The "pts" format is an
+internal format which is described in "pts-format-notes.txt".
+
+The files in the weather-dac-gen (zipped) directory conform to the generic 
+dial-a-cluster format.  All the files are comma separated.  The files have
+to be in a .zip file to be read into the wizard and the .zip file can't
+have extra files (not mentioned below).  This is important when zipping
+the directory on a Mac, because of the .DS_Store files.
+
+Also important, the directory has to be zipped from within the folder containing
+the files described below, i.e. when the file is unzipped it must have only
+the directories var/, dist/, time/, the .dac file, and an optional
+landmarks.csv file.
+
+The central index file is:
+
+datapoints.dac -- information on the data points, must include a header
+that describes each column.  Following the header are rows 
+for each datapoint (so there should be same number of rows as the number 
+of rows in each of the .var files).  For the push script (dac-create-model.py,
+which only works without single sign-on) the name has to be "datapoints.dac".
+For the wizard it only has to have the ".dac" extension.
+
+Also in the main directory is:
+
+landmarks.csv -- a .csv formatted file with a just a single row, where the
+row containds the indices (1-based) for the chosen landmarks in the distance
+matrices.
+
+In the "time" directory:
+
+variable_1.time -- containing the values of the time steps for the first
+variable.  Note that this don’t actually have to be time steps, but are
+the x-axis values.
+
+...
+
+variable_n.time -- there are n variables.
+
+In the "var" directory:
+
+variable_1.var -- actual time series, assumed rectified, one time series 
+per row, must have equal lengths, but different variables can have different lengths.
+
+...
+
+variable_n.var -- there are n time series variables.
+
+variables.meta -- information on the time series for plotting, has three 
+tab delimited columns with header: Name, Time Units, Units, Plot Type.  Following 
+the header are rows for each time series (so there should be n rows + 
+the header).  For Plot Type there are three choices: Curve, Bar, and Scatter.
+These options refer to plot type, where curve is a traditional time series type
+representation, bar is a histogram type plot, and scatter is a point plot.
+
+In the "dist" directory is derived data:
+
+variable_1.dist -- pairwise distance matrix between each 
+time series in variable_1.var.  If landmarks are being used, these are
+not square matrices, but rather N by k, where N is the number of points
+and k is the number of landmarks.
+
+...
+
+variable_n.dist -- distance matrix for nth variable
