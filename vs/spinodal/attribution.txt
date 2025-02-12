@@ -1,0 +1,9 @@
+This dataset is small subset from a larger study using numerical simulation data to model microstructure evolution.
+
+The full spinodal dataset is described in greater detail in the following papers:
+
+S. Desai, A. Shrivastava, M. D’Elia, H. N. Najm, R. Dingreville (2024), “Trade-offs in the latent representation of microstructure evolution”, Acta Materialia, Volume 263, 119514, ISSN 1359-6454, https://doi.org/10.1016/j.actamat.2023.119514.
+
+C. Hu, S. Martin, R. Dingreville (2022), “Accelerating phase-field predictions via recurrent neural networks learning the microstructure evolution in latent space”, Computer Methods in Applied Mechanics and Engineering, Volume 397, 115128, ISSN 0045-7825, https://doi.org/10.1016/j.cma.2022.115128.
+
+J. A. Stewart, R. Dingreville (2020), “Microstructure morphology and concentration modulation of nanocomposite thin-films during simulated physical vapor deposition”, Acta Materialia, Volume 188, Pages 181-191, ISSN 1359-6454, https://doi.org/10.1016/j.actamat.2020.02.011.
