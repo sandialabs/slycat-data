@@ -23,55 +23,63 @@ Then, the cars.csv file was extracted from cars.names and cars.data using
 
     $ python make-cars.py > cars.csv
 
-## Categorical / discrete colormap test CSVs
+## cars-categorical.csv
 
 Derived from `cars.csv` for Parameter Space QA of discrete colormaps, wizard-marked
-categoricals, histogram bins, and ordinal legends. Regenerate with:
+categoricals, histogram bins, ordinal legends, and tick truncation. One file covers
+nulls, palette wrap, sparse/gapped domains, and long labels/numbers so a single PS
+model can exercise all cases.
+Regenerate with:
 
     $ python3 make-cars-categorical.py
 
-### cars-categorical-nulls.csv
+Headers ending in `(categorical)` are numeric columns to mark as categorical in the
+PS creation wizard. String columns are treated as categorical automatically.
 
-Nullish values inside categorical columns.
+**Nullish categoricals**
 
-- Blanks in `Model` and `Origin Label`; `NaN` in `Cylinders`
+- Blanks in `Model` and `Origin Label`; `NaN` in `Cylinders (categorical)`
 - `Origin Label`: USA / Europe / Japan (string)
 - `Null Trap`: mostly A/B/C, plus blanks and literal `"null"` / `"undefined"` strings
 
-**Wizard marks:** `Cylinders`, `Origin` (numeric codes).
-
-**QA:** color-by / histogram on `Model`, `Origin Label`, `Null Trap`, or wizard-marked
-`Cylinders` with a discrete map — nulls should not become category bands; literal
-`"null"` should remain a category; null points use null color.
-
-### cars-categorical-wrap.csv
-
-Readable palette wrap vs exact fit.
+**Palette wrap vs exact fit**
 
 - `Segment`: Seg01…Seg12 (12 categories; wraps on Set2’s 8 colors, fits Paired’s 12)
 - `Segment8`: SegA…SegH (8 categories; exact fit on Set2)
-- Keeps `Model` (~312 categories) for high-cardinality wrap
+- `Model` remains high-cardinality (~312 non-blank values) for wrap stress
 
-**Wizard marks:** optional `Cylinders`, `Origin`.
+**Awkward / sparse domains**
 
-**QA:** color-by `Segment` with Set2 (repeated colors) and Paired (one color each);
-color-by `Segment8` with Set2 (no wrap). Legend bands should match category count.
-
-### cars-categorical-sparse.csv
-
-Awkward domains (100 rows).
-
-- `Grade`: numeric `{1, 2, 5, 9}` (gaps) — wizard-mark as categorical
+- `Grade (categorical)`: numeric `{1, 2, 5, 9}` (gaps)
 - `Grade Label`: string counterparts of those grades
 - `Fleet`: single value `FleetA` (one ordinal color / one legend band)
 - `Region`: `North` / `south` / `EAST` (mixed-case `localeCompare` order)
 - `Emptyish`: `""`, `none`, `ok` (empty string as a category)
 - Continuous `MPG`, `Weight` for axes
+- `Log Spaced`: geometric series from `1e-3` to `1e3` (evenly spaced on a log axis)
 
-**Wizard marks:** `Grade`.
+**Tick truncation**
 
-**QA:** ordinal gap membership (values like 3/4 not in domain); single-category
-discrete legend; Region tick order; Emptyish including a blank category.
+- `Long Label`: 8 long strings (fits Set2); discrete color-by legend middle-ellipsis
+- `Long Number`: plain-decimal floats cycling ~30 magnitudes (large/small/precision) for
+  continuous color-by and X/Y axes (hybrid format + truncation when still wide)
+- `Long Code (categorical)`: 8 plain-decimal long numerics for discrete legend ticks
+  that are long digit strings
+
+**Wizard marks:** `Cylinders (categorical)`, `Origin (categorical)`,
+`Grade (categorical)`, `Long Code (categorical)`.
+
+**QA:** color-by / histogram on `Model`, `Origin Label`, `Null Trap`, or
+`Cylinders (categorical)` — nulls should not become category bands; literal `"null"`
+should remain a category; null points use null color. Color-by `Segment` with Set2
+(repeated colors) and Paired (one color each); color-by `Segment8` with Set2 (no wrap).
+Legend bands should match category count. Ordinal gap membership on
+`Grade (categorical)` (values like 3/4 not in domain); single-category discrete legend
+on `Fleet`; Region tick order; Emptyish including a blank category. Color-by
+`Long Label` with Set2 — 8 bands with truncated tick text. Plot `Long Number` on an
+axis or continuous color-by — long or compact formatted ticks; truncation when still
+wide. Color-by `Long Code (categorical)` with a discrete map — 8 long numeric band
+ticks middle-ellipsized.
 
 ## waves1.prn, waves2.prn, waves3.prn
 
